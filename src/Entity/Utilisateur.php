@@ -34,6 +34,7 @@ class Utilisateur extends BaseUser
         parent::__construct();
         $this->messages_envoyes = new ArrayCollection();
         $this->messages_recus = new ArrayCollection();
+        $this->roles = array("ROLE_USER");
     }
 
     /**
