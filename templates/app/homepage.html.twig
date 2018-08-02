@@ -1,6 +1,46 @@
 {% extends 'base.html.twig' %}
 
+{% block body_class %}page-application{% endblock %}
+
 {% block body %}
-    Test
+    {{ include('./navbar.html.twig') }}
+    <main>
+        <div id="conversations">
+            <div class="row">
+                <div class="col m3">
+                    <div class="collection">
+                        {% for utilisateur in utilisateurs %}
+                            <a href="{{ path('show_conversation', { id : utilisateur.id }) }}" class="collection-item">{{ utilisateur.username }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% if destinataire is defined %}
+                    <div class="col m9">
+                        <div class="card ">
+                            <div class="card-content">
+                                <span class="card-title">
+                                    {{ destinataire.username }}
+                                </span>
+                                <div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div id="qui-est-en-ligne">
+        </div>
+    </main>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            $('.tabs').tabs();
+        });
+    </script>
 {% endblock %}
 

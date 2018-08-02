@@ -1,0 +1,36 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% if app.user %}
+    <p>Vous êtes déjà inscrit</p>
+    <a href="{{ path("index") }}" class="btn btn-danger">Retour à l'accueil</a>
+{% else %}
+{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register form'}}) }}
+    <div class="field">
+        {{ form_label(form.email, "Adresse mail") }}
+        {{ form_widget(form.email, {'attr': {'class': '', 'required' : 'true', 'placeholder' : 'Adresse mail'}}) }}
+        {{ form_errors(form.email) }}
+    </div>
+    <div class="field">
+        {{ form_label(form.username, "Nom d'utilisateur") }}
+        {{ form_widget(form.username, {'attr': {'class': '', 'required' : 'true', 'placeholder' : "Nom d'utilisateur"}}) }}
+        {{ form_errors(form.username) }}
+    </div>
+    <div class="field">
+        {{ form_label(form.plainPassword.first, "Mot de passe") }}
+        {{ form_widget(form.plainPassword.first, {'attr': {'class': '', 'required' : 'true', 'placeholder' : 'Mot de passe'}}) }}
+        {{ form_errors(form.plainPassword.first) }}
+    </div>
+    <div class="field">
+        {{ form_label(form.plainPassword.second, "Entrez à nouveau le mot de passe") }}
+        {{ form_widget(form.plainPassword.second, {'attr': {'class': '', 'required' : 'true', 'placeholder' : 'Entrez à nouveau le mot de passe'}}) }}
+        {{ form_errors(form.plainPassword.second) }}
+    </div>
+
+    <div class="form-group" style='margin-top: 15px;'>
+        <button type="submit" class="btn btn-default">Valider</button>
+        <a href="{{app.request.headers.get('referer')}}" class="btn btn-default">Retour</a>
+    </div>
+    {# Important pour la sécurité du formulaire #}
+    {{ form_rest(form) }}
+{{ form_end(form) }}
+{% endif %}

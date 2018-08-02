@@ -1,0 +1,16 @@
+.page-connexion{
+  background: $couleur-principale;
+  .full-container{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    .card-panel{
+      min-width: 350px;
+      margin: auto;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+.barre-de-navigation{
+  .col{
+    padding: 0;
+    .tabs{
+      height: auto;
+      .tab{
+        height: auto;
+        i{
+          font-size: 4rem;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}
