@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UtilisateurRepository")
@@ -16,6 +17,7 @@ class Utilisateur extends BaseUser
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"test"})
      */
     protected $id;
 
@@ -28,6 +30,10 @@ class Utilisateur extends BaseUser
      * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="to_user", orphanRemoval=true)
      */
     private $messages_recus;
+
+    /**
+     */
+    protected $username;
 
     public function __construct()
     {

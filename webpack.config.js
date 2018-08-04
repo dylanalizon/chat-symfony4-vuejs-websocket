@@ -42,6 +42,13 @@ Encore
 
     // uncomment if you're having problems with a jQuery plugin
     .autoProvidejQuery()
+
+    .enableVueLoader()
+
+    .configureBabel(function(babelConfig) {
+        babelConfig.presets = ['es2015','stage-2']
+        babelConfig.plugins = ['transform-runtime']
+    })
 ;
 
 module.exports = Encore.getWebpackConfig();

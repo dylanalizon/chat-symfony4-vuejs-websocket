@@ -1,0 +1,37 @@
+/*
+  Base
+ */
+.deconnexion{
+  text-align: right;
+  i{
+    color: $primary-color;
+    font-size: 40px;
+  }
+}
+/*
+  Fin Base
+ */
+
+/*
+  Surcouche MaterializeCss
+ */
+span.badge.new {
+  font-weight: bold;
+}
+.collection{
+  a.collection-item{
+    &:not(.active) {
+      &:hover {
+        background-color: rgba(176, 63,63, 0.2);
+      }
+    }
+    &.active{
+      background-color: rgba(176, 63,63, 0.2);
+      font-weight: bold;
+      color: $primary-color;
+    }
+  }
+}
+/*
+  Fin Surcouche MaterializeCss
+ */

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Message;
+use App\Entity\Utilisateur;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -19,22 +20,52 @@ class MessageRepository extends ServiceEntityRepository
         parent::__construct($registry, Message::class);
     }
 
-//    /**
-//     * @return Message[] Returns an array of Message objects
-//     */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param Utilisateur $from
+     * @param Utilisateur $to
+     * @return Message[] Returns an array of Message objects
+     */
+    public function findByConversation(Utilisateur $from, Utilisateur $to)
     {
         return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
+            ->where('((m.from_user = :from AND m.to_user = :to) OR (m.from_user = :to AND m.to_user = :from))')
+            ->setParameter('from', $from)
+            ->setParameter('to', $to)
+            ->orderBy('m.created_at', 'ASC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
+    /**
+     * @param Utilisateur $utilisateur
+     * @return mixed
+     */
+    public function findUnreadCountByUser(Utilisateur $utilisateur){
+        $result = $this->getEntityManager()->createQuery(
+          "SELECT u.id, count(m) nombre
+              FROM App:Message m
+              LEFT JOIN App:Utilisateur u WITH (m.from_user = u.id)
+              WHERE m.to_user = :utilisateur AND m.read_at IS NULL
+              GROUP BY m.from_user"
+        )
+            ->setParameter('utilisateur', $utilisateur)
+            ->getResult();
+        return array_column($result, 'nombre', 'id');
+    }
+
+
+    public function readAll(Utilisateur $utilisateur, Utilisateur $from){
+        $this->createQueryBuilder('m')
+            ->update('App:Message', 'm')
+            ->set('m.read_at', ':date')
+            ->where('m.from_user = :from AND m.to_user = :to AND m.read_at IS NULL')
+            ->setParameter('date', new \DateTime('now'))
+            ->setParameter('from', $from)
+            ->setParameter('to', $utilisateur)
+            ->getQuery()
+            ->execute();
+    }
 
     /*
     public function findOneBySomeField($value): ?Message

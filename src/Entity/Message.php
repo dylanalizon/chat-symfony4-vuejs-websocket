@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MessageRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Message
 {
@@ -30,6 +32,7 @@ class Message
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
      */
     private $content;
 
@@ -42,6 +45,26 @@ class Message
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $read_at;
+
+    /**
+     * Message constructor.
+     */
+    public function __construct()
+    {
+        $this->read_at = null;
+    }
+
+
+    /**
+     *
+     * @ORM\PrePersist
+     */
+    public function updatedTimestamps()
+    {
+        if ($this->created_at == null) {
+            $this->created_at = new \DateTime('now');
+        }
+    }
 
     public function getId()
     {

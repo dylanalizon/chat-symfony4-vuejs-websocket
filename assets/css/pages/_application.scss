@@ -1,9 +1,44 @@
 .page-application{
-  .collection{
-    a.collection-item{
-      &:not(.active) {
-        &:hover {
-          background-color: rgba(176, 63,63, 0.2);
+  .conversation{
+    .card-title{
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid $primary-color;
+      h2{
+        font-size: 30px;
+        margin: 0;
+      }
+    }
+    .messages{
+      max-height: 45vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 0 5px;
+      .auteur{
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+      &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 16px;
+      }
+      &::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+    }
+    .envoyer-message{
+      .envoyer-message-erreur{
+        .materialize-textarea{
+          border-bottom: 1px solid red;
+        }
+        .erreur{
+          color: red;
         }
       }
     }

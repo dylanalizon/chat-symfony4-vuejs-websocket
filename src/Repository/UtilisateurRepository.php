@@ -26,6 +26,7 @@ class UtilisateurRepository extends ServiceEntityRepository
     public function findAllWithoutCurrentUser($id)
     {
         return $this->createQueryBuilder('u')
+            ->select('u.id, u.username')
             ->where('u.id != :id')
             ->setParameter('id', $id)
             ->orderBy('u.username', 'ASC')
