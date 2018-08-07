@@ -1,44 +1,79 @@
 .page-application{
   .conversation{
-    .card-title{
-      padding-bottom: 10px;
-      margin-bottom: 20px;
-      border-bottom: 1px solid $primary-color;
-      h2{
-        font-size: 30px;
-        margin: 0;
-      }
-    }
-    .messages{
-      max-height: 45vh;
-      overflow-y: auto;
-      overflow-x: hidden;
-      padding: 0 5px;
-      .auteur{
-        font-weight: bold;
-        margin-bottom: 10px;
-      }
-      &::-webkit-scrollbar {
-        width: 5px;
-      }
-      &::-webkit-scrollbar-track {
-        background: #f1f1f1;
-      }
-      &::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 16px;
-      }
-      &::-webkit-scrollbar-thumb:hover {
-        background: #555;
-      }
-    }
-    .envoyer-message{
-      .envoyer-message-erreur{
-        .materialize-textarea{
-          border-bottom: 1px solid red;
+    .card-content{
+      position: relative;
+      .card-title{
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid $primary-color;
+        h2{
+          font-size: 30px;
+          margin: 0;
         }
-        .erreur{
-          color: red;
+      }
+      .messages{
+        max-height: 45vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 0 5px;
+        .auteur{
+          font-weight: bold;
+          margin-bottom: 10px;
+        }
+        .message-date{
+          font-size: 10px;
+        }
+        .content{
+          white-space: pre-line;
+          word-wrap: break-word;
+        }
+        &::-webkit-scrollbar {
+          width: 5px;
+        }
+        &::-webkit-scrollbar-track {
+          background: #f1f1f1;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: #888;
+          border-radius: 16px;
+        }
+        &::-webkit-scrollbar-thumb:hover {
+          background: #555;
+        }
+      }
+      .envoyer-message{
+        position: relative;
+        .envoyer-message-erreur{
+          .materialize-textarea{
+            border-bottom: 1px solid red;
+          }
+          .erreur{
+            color: red;
+          }
+        }
+      }
+      .conversation-loading{
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: rgba(#FFF, 0.8);
+        .loader{
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          display: block;
+          border: 10px solid #DDD;
+          border-radius: 50%;
+          border-top: 10px solid $couleur-principale;
+          width: 50px;
+          height: 50px;
+          animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+          from { transform: translate(-50%, -50%) rotate(0deg); }
+          to { transform: translate(-50%, -50%) rotate(360deg); }
         }
       }
     }

@@ -1,4 +1,6 @@
 var Encore = require('@symfony/webpack-encore');
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+var webpack = require('webpack');
 
 Encore
     // directory where compiled assets will be stored
@@ -49,6 +51,11 @@ Encore
         babelConfig.presets = ['es2015','stage-2']
         babelConfig.plugins = ['transform-runtime']
     })
+/*
+    .addPlugin(new BundleAnalyzerPlugin({
+        openAnalyzer: false
+    }))*/
+    .addPlugin(new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /fr/))
 ;
 
 module.exports = Encore.getWebpackConfig();

@@ -14,7 +14,6 @@ class AppController extends Controller
 {
     /**
      * @Route("/", name="homepage")
-     * @Route("/", name="application")
      * @Route("/conversations/{id}", name="application")
      * @param ObjectManager $em
      * @return \Symfony\Component\HttpFoundation\Response

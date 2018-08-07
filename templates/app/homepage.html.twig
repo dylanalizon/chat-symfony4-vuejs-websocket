@@ -5,9 +5,7 @@
 {% block body %}
     {{ include('./navbar.html.twig') }}
     <main>
-        <div id="app">
-
-        </div>
+        <div id="app"></div>
 {#        <div class="container">
             <div id="conversations">
                 <div class="row">
@@ -75,16 +73,20 @@
     </main>
 {% endblock %}
 
+{% block javascripts_dataLayout %}
+    {{ parent() }}
+    <script>
+        dataLayout.userId = {{ app.user.id }};
+        dataLayout.token = "{{ csrf_token(app.user.id) }}";
+    </script>
+{% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
     <script>
         $(document).ready(function(){
             $('.tabs').tabs();
         });
-        var $divListeMessages = document.getElementById("liste-messages");
-        if($divListeMessages){
-            $divListeMessages.scrollTop = $divListeMessages.scrollHeight;
-        }
     </script>
 {% endblock %}
 

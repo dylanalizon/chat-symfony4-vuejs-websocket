@@ -17,9 +17,14 @@ class Utilisateur extends BaseUser
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"test"})
+     * @Groups({"messages"})
      */
     protected $id;
+
+    /**
+     * @Groups({"messages"})
+     */
+    protected $username;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="from_user", orphanRemoval=true)
@@ -30,10 +35,6 @@ class Utilisateur extends BaseUser
      * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="to_user", orphanRemoval=true)
      */
     private $messages_recus;
-
-    /**
-     */
-    protected $username;
 
     public function __construct()
     {

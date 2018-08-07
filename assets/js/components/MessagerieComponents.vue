@@ -5,6 +5,9 @@
                 <div class="col m3">
                     <ListeConversations></ListeConversations>
                 </div>
+                <div class="col m9 conversation">
+                    <router-view></router-view>
+                </div>
             </div>
         </div>
         <div id="qui-est-en-ligne">
@@ -13,10 +16,13 @@
 </template>
 
 <script>
-    import ListeConversations from './ListeConversations'
+    import ListeConversations from './ListeConversationsComponents'
 
     export default {
         name: 'Messagerie',
+        mounted () {
+          this.$store.commit('setUser', dataLayout.userId)
+        },
         components: { ListeConversations }
     }
 </script>

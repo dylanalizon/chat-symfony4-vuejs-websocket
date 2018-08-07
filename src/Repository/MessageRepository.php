@@ -25,16 +25,22 @@ class MessageRepository extends ServiceEntityRepository
      * @param Utilisateur $to
      * @return Message[] Returns an array of Message objects
      */
-    public function findByConversation(Utilisateur $from, Utilisateur $to)
+    public function findByConversation(Utilisateur $from, Utilisateur $to, $before = null)
     {
-        return $this->createQueryBuilder('m')
+        $qb = $this->createQueryBuilder('m')
             ->where('((m.from_user = :from AND m.to_user = :to) OR (m.from_user = :to AND m.to_user = :from))')
-            ->setParameter('from', $from)
+            ;
+        if($before){
+            $qb->andWhere('(m.created_at < :createdAt)');
+        }
+        $qb ->setParameter('from', $from)
             ->setParameter('to', $to)
-            ->orderBy('m.created_at', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
+            ;
+        if($before){
+            $qb->setParameter('createdAt', $before);
+        }
+        /*            ->setMaxResults(10)*/
+        return $qb->orderBy('m.created_at', 'DESC')->getQuery()->getResult();
     }
 
     /**

@@ -2,7 +2,7 @@
 <div class="card-panel">
     {% if app.user %}
         <p>Vous êtes déjà connecté.</p>
-        <p><a href="{{ path('application') }}">Retour à l'application</a></p>
+        <p><a href="{{ path('homepage') }}">Retour à l'homepage</a></p>
 
     {% else %}
         {% if error %}
@@ -35,7 +35,7 @@
                     <label for="password">{{ 'security.login.password'|trans }}</label>
                 </div>
             </div>
-            <input type="hidden" name="_target_path" value="{{ path('application') }}" />
+            <input type="hidden" name="_target_path" value="{{ path('homepage') }}" />
 
 
 

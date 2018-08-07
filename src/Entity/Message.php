@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MessageRepository")
@@ -15,34 +16,40 @@ class Message
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"messages"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="messages_envoyes")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"messages"})
      */
     private $from_user;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="messages_recus")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"messages"})
      */
     private $to_user;
 
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank
+     * @Groups({"messages"})
      */
     private $content;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"messages"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"messages"})
      */
     private $read_at;
 

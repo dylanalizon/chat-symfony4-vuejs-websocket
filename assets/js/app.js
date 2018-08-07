@@ -8,16 +8,16 @@
 require('../css/app.scss')
 
 import Vue from 'vue'
-import Messagerie from './components/Messagerie'
+import Messagerie from './components/MessagerieComponents'
+import Messages from './components/MessagesComponents'
 import store from './store/store'
-import _ from 'lodash'
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
 const routes = [
     {path: '/'},
-    {path: '/conversations/:id', name: 'conversation'}
+    {path: '/conversations/:id', component: Messages, name: 'conversation'}
 ]
 
 const router = new VueRouter({
@@ -32,13 +32,3 @@ new Vue({
     store,
     router
 });
-
-
-
-/*let response = fetch('/api/conversations')
-    .then((resp) => resp.json())
-    .then(function(data) {
-        return data;
-    });
-
-console.log(response);*/
