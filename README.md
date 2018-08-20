@@ -16,4 +16,4 @@ Steps:
     - php bin/console gos:websocket:server  
     - php bin/console server:run  
 
-#/!\ Low security /!\
+/!\ Low security /!\
