@@ -1,0 +1,13 @@
+gos_web_socket:
+    server:
+        port: 8080        #The port the socket server will listen on
+        host: 127.0.0.1   #The host ip to bind to
+        router:
+            resources:
+                - '%kernel.project_dir%/config/pubsub.yaml'
+    client:
+        firewall: main
+        session_handler: '@session.handler.pdo'
+    topics:
+        - '@app.chat.topic'
+        - '@app.chat.online_users'

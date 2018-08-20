@@ -3,74 +3,7 @@
 {% block body_class %}page-application{% endblock %}
 
 {% block body %}
-    {{ include('./navbar.html.twig') }}
-    <main>
-        <div id="app"></div>
-{#        <div class="container">
-            <div id="conversations">
-                <div class="row">
-                    <div class="col m3">
-                        <div class="collection card">
-                            {% for utilisateur in utilisateurs %}
-                                <a href="{{ path('show_conversation', { id : utilisateur.id }) }}" class="collection-item {% if destinataire is defined %}{{ utilisateur == destinataire ? 'active' }}{% endif %}">
-                                    {{ utilisateur.username }}
-                                    {% if unread[utilisateur.id] is defined %}
-                                        <span class="new badge" data-badge-caption="">{{ unread[utilisateur.id] }}</span>
-                                    {% endif %}
-                                </a>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    {% if destinataire is defined %}
-                        <div class="col m9 conversation">
-                            <div class="card">
-                                <div class="card-content">
-                                    <div class="card-title">
-                                        <h2>
-                                            {{ destinataire.username }}
-                                        </h2>
-                                    </div>
-                                    <div class="messages" id="liste-messages">
-                                        {% for message in messages %}
-                                            <div class="row message">
-                                                <div class="col m10 {{ message.fromUser != destinataire ? 'offset-m2 right-align' : '' }}">
-                                                    <p class="auteur">
-                                                        {{ message.fromUser != destinataire ? 'Moi' : destinataire.username }}
-                                                    </p>
-                                                    <p class="content">
-                                                        {{ message.content|nl2br }}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                                    <div class="envoyer-message">
-                                        {{ form_start(form) }}
-                                        <div class="row">
-                                            <div class="input-field col s12 {{ form.content.vars.valid ? '' : 'envoyer-message-erreur' }}">
-                                                {{ form_widget(form.content, { 'attr' : { 'placeholder' : 'Ecrivez votre message...', 'class' : 'materialize-textarea' } }) }}
-                                                {% if not form.content.vars.valid %}
-                                                    <span class="erreur">Votre message ne doit pas être vide</span>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <button type="submit" class="btn waves-effect waves-light right">
-                                                Envoyer
-                                            </button>
-                                        </div>
-                                        {{ form_end(form) }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-            <div id="qui-est-en-ligne">
-            </div>
-        </div>#}
-    </main>
+    <div id="app"></div>
 {% endblock %}
 
 {% block javascripts_dataLayout %}
@@ -82,11 +15,9 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset('bundles/goswebsocket/js/vendor/autobahn.min.js') }}"></script>
+    <script src="{{ asset('bundles/goswebsocket/js/gos_web_socket_client.js') }}"></script>
     {{ parent() }}
-    <script>
-        $(document).ready(function(){
-            $('.tabs').tabs();
-        });
-    </script>
+    <script src="{{ asset('build/app.js') }}"></script>
 {% endblock %}
 

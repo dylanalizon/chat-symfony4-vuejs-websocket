@@ -1,0 +1,12 @@
+app_topic_chat:
+    channel: 'app/chat/{user}'
+    handler:
+        callback: 'app.messagerie' #related to the getName() of your topic
+    requirements:
+        user:
+            pattern: '\d+'
+
+app_topic_online_users:
+    channel: 'app/users'
+    handler:
+        callback: 'app.users'

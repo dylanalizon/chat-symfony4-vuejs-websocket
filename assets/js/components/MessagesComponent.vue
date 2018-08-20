@@ -44,6 +44,9 @@
             messages: function () {
                 return this.$store.getters.messages(this.$route.params.id)
             },
+            lastMessage: function () {
+                return this.messages[this.messages.length - 1]
+            },
             conversation () {
                 return this.$store.getters.conversation(this.$route.params.id)
             },
@@ -60,19 +63,28 @@
         mounted () {
             this.loadMessages()
             this.$listeMessages = this.$el.querySelector('.messages')
+            document.addEventListener('visibilitychange', this.onVisible)
+            this.scrollToBottom()
+        },
+        destroyed () {
+            document.removeEventListener('visibilitychange', this.onVisible)
         },
         watch: {
             '$route.params.id': function () {
                 this.loadMessages()
+            },
+            lastMessage: function () {
+                this.scrollToBottom()
             }
         },
         methods: {
             async loadMessages () {
+                this.loading = true
                 await this.$store.dispatch('loadMessages', this.$route.params.id)
-                this.scrollToBottom()
                 if (this.messages.length < this.countAll) {
                     this.$listeMessages.addEventListener('scroll', this.onScroll)
                 }
+                this.loading = false
             },
             async onScroll () {
                 if (this.$listeMessages.scrollTop === 0){
@@ -105,12 +117,16 @@
                             userId: this.$route.params.id
                         })
                         this.content = ''
-                        this.scrollToBottom()
                     }catch (e) {
                         this.erreur = e.message
                     }
                 }
                 this.loading = false
+            },
+            onVisible () {
+                if (document.hidden === false) {
+                    this.$store.dispatch('loadMessages', this.$route.params.id)
+                }
             }
         },
         components: { Message }

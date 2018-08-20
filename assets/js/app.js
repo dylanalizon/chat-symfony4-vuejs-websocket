@@ -8,16 +8,19 @@
 require('../css/app.scss')
 
 import Vue from 'vue'
-import Messagerie from './components/MessagerieComponents'
-import Messages from './components/MessagesComponents'
+import Messagerie from './components/MessagerieComponent'
+import Application from './components/ApplicationComponent'
+import OnlineUsers from './components/OnlineUsersComponent'
 import store from './store/store'
 import VueRouter from 'vue-router'
+
 
 Vue.use(VueRouter)
 
 const routes = [
-    {path: '/'},
-    {path: '/conversations/:id', component: Messages, name: 'conversation'}
+    {path: '/', component: Messagerie, name: 'messagerie'},
+    {path: '/utilisateurs-en-ligne', component: OnlineUsers, name: 'utilisateurs-en-ligne'},
+    {path: '/conversations/:id', component: Messagerie, name: 'conversations'}
 ]
 
 const router = new VueRouter({
@@ -27,8 +30,8 @@ const router = new VueRouter({
 
 new Vue({
     el: '#app',
-    template: '<Messagerie/>',
-    components: { Messagerie },
+    template: '<Application/>',
+    components: { Application },
     store,
     router
 });

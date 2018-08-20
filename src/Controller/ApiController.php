@@ -52,6 +52,7 @@ class ApiController extends Controller
      * @param Utilisateur $destinataire
      * @param ObjectManager $em
      * @param Request $request
+     * @param PredisClient $redis
      * @return JsonResponse|Response
      */
     public function postConversations(Utilisateur $destinataire, ObjectManager $em, Request $request)
@@ -104,19 +105,38 @@ class ApiController extends Controller
                 $countAll = count($messagesQuery);
             }
             $messages = array_reverse(array_slice($messagesQuery, 0, 10));
-
+            $updated = false;
             foreach ($messages as $message) {
                 if($message->getReadAt() === null && $message->getToUser() == $utilisateur){
-                    $em->getRepository(Message::class)->readAll($utilisateur, $destinataire);
-                    break;
+                    $message->setReadAt(new \DateTime('now'));
+                    if($updated === false){
+                        $em->getRepository(Message::class)->readAll($utilisateur, $destinataire);
+                    }
+                    $updated = true;
                 }
             }
-
             $messagesJson = $this->serializer->serialize([
                 "messages" => $messages,
                 'count' => $before ? '' : $countAll
             ], 'json', ['groups' => ['messages']]);
             return new Response($messagesJson);
         }
+    }
+
+    /**
+     * @Route("/api/messages/{id}", methods={"POST"}, name="api_post_read_message")
+     * @param Message $message
+     * @return JsonResponse
+     */
+    public function postReadMessage(Message $message, ObjectManager $em){
+        $user = $this->getUser();
+        if ($user == $message->getToUser()) {
+            $message->setReadAt(new \DateTime('now'));
+            $em->persist($message);
+            $em->flush();
+        }else{
+            return $this->json(["message" => "Mauvais destinataire" ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+        return $this->json(['read_at' => $message->getReadAt()]);
     }
 }
