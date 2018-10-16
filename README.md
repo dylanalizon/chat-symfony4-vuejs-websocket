@@ -11,9 +11,8 @@ Bundles: FOSUserBundle, GOSWebSocketBundle
 Packages Yarn: webpack-encore, node-sass, sass-loader, vue, vue-router, vuex, momentjs, favico.js, lodash, webpack-bundle-analyzer
 
 Steps:  
+    - composer install  
     - yarn install  
-    - yarn run encore dev  
+    - yarn run encore production  
     - php bin/console gos:websocket:server  
     - php bin/console server:run  
-
-/!\ Low security /!\
